@@ -12,4 +12,4 @@ const createProducts = async (req, res) => {
 
 module.exports = createProducts;
 
-// DB.JS IS NOT RUNNING.
+

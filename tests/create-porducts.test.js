@@ -1,26 +1,27 @@
-const app = require('../server')
-const request = require('supertest')
-const mongoose = require('mongoose')
-const connectDB = require('../models/db')
+const app = require("../server");
+const request = require("supertest");
+const mongoose = require("mongoose");
+const connectDB = require("../models/db");
 
-
-describe('POST /create-products', () => {
-    beforeAll(async () => {
-        await connectDB()
-        // const mongoURI = process.env.MONGO_URI;
-        // console.log(mongoURI);
-        // await mongoose.connect(mongoURI);
-        // await mongoose.connection.dropDatabase();
-    });
-
-    test('Create new product', async () => {
+beforeAll(async () => {
+  await connectDB();
+  await mongoose.connection.dropDatabase();
+});
+describe("POST /create-products", () => {
+    
+    test("Create new product", async () => {
         const newProduct = {
-            name: 'PS3',
+            name: "PS6",
             quantity: 11,
             price: 150,
-            image: 'just an image'
-        }
+            image: "just an image",
+        };
+        
+        const response = await request(app).post("/products").send(newProduct);
+        console.log(response.body);
+    });
+});
 
-        const response = await request(app).post('/products')
-    })
-})
+afterAll(async () => {
+    await mongoose.connection.close();
+});
