@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-require("dotenv").config();
+const dotenv = require("dotenv").config(); //loading .env
+
+
 
 const testing = require("./controller/test.controller");
 const createProducts = require("./controller/postProducts.controller");
