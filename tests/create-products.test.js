@@ -55,16 +55,32 @@ describe("Get products by ID", () => {
 
     const response = await request(app).post("/products").send(newProduct);
 
-    console.log(response.body);
 
     let id = await Products.findOne();
-    console.log(id.id);
     const respond = await request(app).get(`/products/${id.id}`);
     expect(respond.status).toBe(200);
     expect(respond.body.product._id).toBe(id.id);
     expect(respond.body.product.name).toBe("xbox360");
   });
 });
+
+describe("Update the prodcut by ID", () => {
+  it('update the name from xbox360 to ps3', async () => {
+
+    let id = await Products.findOne();
+    console.log(id.id , 'i am in put method');
+    const updatedName = {
+      name: 'Ps4'
+    }
+
+    const response = await request(app).put(`/products/${id.id}`).send(updatedName)
+
+    const respond = await request(app).get(`/products/${id.id}`)
+
+    expect(respond.body.product.name).toBe('Ps4')
+
+  })
+})
 
 afterAll(async () => {
   await mongoose.connection.close();
