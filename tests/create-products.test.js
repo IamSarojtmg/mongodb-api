@@ -6,7 +6,7 @@ const Products = require("../models/products.model");
 
 beforeAll(async () => {
   await connectDB();
-  await mongoose.connection.dropDatabase();
+  // await mongoose.connection.dropDatabase();
 });
 describe("POST /create-products", () => {
   test("Create new product", async () => {
@@ -45,7 +45,7 @@ describe("Get the products", () => {
 });
 
 describe("Get products by ID", () => {
-  it.only("Responds with a single product depending on the id", async () => {
+  it("Responds with a single product depending on the id", async () => {
     const newProduct = {
       name: "xbox360",
       quantity: 100,
@@ -55,29 +55,42 @@ describe("Get products by ID", () => {
 
     const response = await request(app).post("/products").send(newProduct);
 
-
-    let id = await Products.findOne();
-    const respond = await request(app).get(`/products/${id.id}`);
+    const respond = await request(app).get(`/products/660013fed2e7420ec6f695f7`);
     expect(respond.status).toBe(200);
-    expect(respond.body.product._id).toBe(id.id);
+    expect(respond.body.product._id).toBe('660013fed2e7420ec6f695f7');
     expect(respond.body.product.name).toBe("xbox360");
   });
 });
 
 describe("Update the prodcut by ID", () => {
-  it('update the name from xbox360 to ps3', async () => {
+  it('update the name from ps6 to ps5', async () => {
 
-    let id = await Products.findOne();
-    console.log(id.id , 'i am in put method');
+    let id = '660013fdd2e7420ec6f695f2'
+
     const updatedName = {
-      name: 'Ps4'
+      name: 'Sony Ps5'
     }
 
-    const response = await request(app).put(`/products/${id.id}`).send(updatedName)
+    const response = await request(app).put(`/products/${id}`).send(updatedName)
 
-    const respond = await request(app).get(`/products/${id.id}`)
+    const respond = await request(app).get(`/products/${id}`)
 
-    expect(respond.body.product.name).toBe('Ps4')
+    expect(respond.body.product.name).toBe('Sony Ps5')
+
+  })
+})
+
+describe("Delete the product by id", () => {
+  it('404 - deletes the specific product by id and returns no body', async() => {
+    let id = '660009b976773921dece005e'
+
+    const response = await request(app).delete(`/products/${id}`)
+    if (response.status === 200) {
+      expect(response.body.message).toBe(`product with ${id} deleted`)
+    } else {
+      expect(response.body.message).toBe(`${id} not found`)
+    }
+    
 
   })
 })
