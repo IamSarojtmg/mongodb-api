@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
+app.use(cors());
+
 
 const testing = require("./controller/test.controller");
 const createProducts = require("./controller/postProducts.controller");
@@ -16,7 +19,7 @@ app.get('/products/:Id', getProductByID)
 app.put('/products/:id', updateProduct)
 app.delete('/products/:id', deleteProduct)
 
-const server = app.listen(3000, () => {
+const server = app.listen(3001, () => {
   console.log("Port is listening");
   connectDB()//for the development database connection
 });
