@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-let URI;
+let URI = process.env.MONGO_URI
 
-if (process.env.NODE_ENV === "test") {
-  URI = process.env.MONGO_URI_TEST;
-} else {
-  URI = process.env.MONGO_URI_DEV || process.env.MONGO_URI;
-}
+// if (process.env.NODE_ENV === "test") {
+//   URI = process.env.MONGO_URI_TEST;
+// } else {
+//   URI = process.env.MONGO_URI_DEV || process.env.MONGO_URI;
+// }
 
 const connectDB = async () => {
   try {
