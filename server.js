@@ -19,8 +19,10 @@ app.get('/products/:Id', getProductByID)
 app.put('/products/:id', updateProduct)
 app.delete('/products/:id', deleteProduct)
 
-const server = app.listen(3001, () => {
-  console.log("Port is listening");
+const PORT = process.env.PORT || 3001
+
+const server = app.listen(PORT, () => {
+  console.log(`Listening to ${PORT}`);
   connectDB()//for the development database connection
 });
 module.exports = server;
