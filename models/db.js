@@ -15,23 +15,16 @@ let URI = process.env.MONGO_URI
 
 
 
-const connectDB = ()=> mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('MongoDB connected!');
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-  });
 
-// const connectDB = async () => {
-//   try {
-//     await mongoose.connect(URI).then(() => {
-//       console.log("db connected");
-//     });
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// };
+const connectDB = async () => {
+  try {
+    await mongoose.connect(URI).then(() => {
+      console.log("db connected");
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
 module.exports = connectDB;
 

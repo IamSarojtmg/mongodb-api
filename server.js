@@ -19,7 +19,7 @@ app.get('/products/:Id', getProductByID)
 app.put('/products/:id', updateProduct)
 app.delete('/products/:id', deleteProduct)
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 
 const server = app.listen(PORT, () => {
   console.log(`Listening to ${PORT}`);
