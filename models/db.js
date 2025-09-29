@@ -4,8 +4,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-
-let URI = process.env.MONGO_URI
+let URI = process.env.MONGO_URI;
 
 // if (process.env.NODE_ENV === "test") {
 //   URI = process.env.MONGO_URI_TEST;
@@ -13,15 +12,15 @@ let URI = process.env.MONGO_URI
 //   URI = process.env.MONGO_URI_DEV || process.env.MONGO_URI;
 // }
 
-
-
-const connectDB = ()=> mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('MongoDB connected!');
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-  });
+const connectDB = () =>
+  mongoose
+    .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      console.log("MongoDB connected!");
+    })
+    .catch((err) => {
+      console.error("MongoDB connection error:", err);
+    });
 
 // const connectDB = async () => {
 //   try {
@@ -34,27 +33,6 @@ const connectDB = ()=> mongoose.connect(URI, { useNewUrlParser: true, useUnified
 // };
 
 module.exports = connectDB;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const mongoose = require("mongoose");
 // // require("dotenv").config();

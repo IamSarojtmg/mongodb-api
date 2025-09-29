@@ -25,35 +25,38 @@ const productSchema = mongoose.Schema(
     duration: {
       type: Number,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,
   }
 );
 
-productSchema.pre('save', function (next) {
-    if (this.date) {
-        const utcString = this.date.toISOString(); 
-        const localDate = new Date(utcString); 
-        const offset = localDate.getTimezoneOffset(); 
-        const offsetHours = Math.abs(Math.floor(offset / 60)).toString().padStart(2, '0');
-        const offsetMinutes = Math.abs(offset % 60).toString().padStart(2, '0');
-        const sign = offset > 0 ? '-' : '+';
+productSchema.pre("save", function (next) {
+  if (this.date) {
+    const utcString = this.date.toISOString();
+    const localDate = new Date(utcString);
+    const offset = localDate.getTimezoneOffset();
+    const offsetHours = Math.abs(Math.floor(offset / 60))
+      .toString()
+      .padStart(2, "0");
+    const offsetMinutes = Math.abs(offset % 60)
+      .toString()
+      .padStart(2, "0");
+    const sign = offset > 0 ? "-" : "+";
 
+    const formattedDate = `${localDate
+      .toISOString()
+      .slice(0, 19)}${sign}${offsetHours}:${offsetMinutes}`;
 
-        const formattedDate = `${localDate.toISOString().slice(0, 19)}${sign}${offsetHours}:${offsetMinutes}`;
-        
-
-        this.date = formattedDate; 
-    }
-    next();
+    this.date = formattedDate;
+  }
+  next();
 });
 
 const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
-
 
 // //creating the object to store data
 // const mongoose = require("mongoose");
